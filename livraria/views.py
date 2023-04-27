@@ -4,10 +4,12 @@ from rest_framework.viewsets import ModelViewSet
 
 from livraria.models import Categoria
 from livraria.models import Editora
+from livraria.models import Autor
 from livraria.models import Livro
 
 from livraria.serializers import CategoriaSerializer
 from livraria.serializers import EditoraSerializer
+from livraria.serializers import AutorSerializer
 from livraria.serializers import LivroSerializer
 
 
@@ -19,6 +21,11 @@ class CategoriaViewSet(ModelViewSet):
 class EditoraViewSet(ModelViewSet):
     queryset = Editora.objects.all()
     serializer_class = EditoraSerializer
+
+
+class AutorViewSet(ModelViewSet):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
 
 
 class LivroViewSet(ModelViewSet):
