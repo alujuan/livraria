@@ -11,6 +11,8 @@ from livraria.serializers import CategoriaSerializer
 from livraria.serializers import EditoraSerializer
 from livraria.serializers import AutorSerializer
 from livraria.serializers import LivroSerializer
+from livraria.serializers import LivroDetailSerializer
+from livraria.serializers import LivroListSerializer
 
 
 class CategoriaViewSet(ModelViewSet):
@@ -30,4 +32,18 @@ class AutorViewSet(ModelViewSet):
 
 class LivroViewSet(ModelViewSet):
     queryset = Livro.objects.all()
-    serializer_class = LivroSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return LivroListSerializer
+        elif self.action == "retrieve":
+            return LivroDetailSerializer
+        return LivroSerializer
+
+    serializer_classes = {
+        "list": LivroListSerializer,
+        "retrieve": LivroDetailSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializer_classes.get(self.action, LivroSerializer)
